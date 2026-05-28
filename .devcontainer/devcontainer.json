@@ -1,0 +1,23 @@
+{
+    "name": "D796 Ubuntu Dev",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": false,
+            "configureZshAsDefaultShell": false,
+            "installOhMyZsh": false,
+            "upgradePackages": true
+        }
+    },
+    "postCreateCommand": "bash .devcontainer/setup.sh",
+    "remoteUser": "vscode",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "timonwong.shellcheck",
+                "foxundermoon.shell-format",
+                "bierner.markdown-mermaid"
+            ]
+        }
+    }
+}

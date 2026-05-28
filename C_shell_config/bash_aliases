@@ -1,0 +1,26 @@
+# ~/.bash_aliases
+# WGU D796 — RQN1 Task 1, Part C2
+# Author: Tonio Jenkins
+#
+# This file is sourced by ~/.bashrc and provides shortcut aliases for
+# frequently used commands and for navigating to common root-level
+# directories.
+
+# ---------------------------------------------------------------------------
+# C2 bullet 1 — shortcuts for common commands.
+# ---------------------------------------------------------------------------
+alias ll='ls -lrt'        # long listing sorted by modification time, oldest first
+alias la='ls -a'          # show hidden files
+alias c='clear'           # clear the terminal
+
+# ---------------------------------------------------------------------------
+# C2 bullet 2 — navigation from any directory to any other directory.
+# These work whether you are root (using /root/...) or a normal user
+# (using $HOME/...) because we resolve $HOME at expansion time.
+# ---------------------------------------------------------------------------
+alias desktop='cd "$HOME/Desktop"'
+alias download='cd "$HOME/Downloads"'
+alias documents='cd "$HOME/Documents"'
+
+# Bonus: jump straight to /root for screenshots while demoing.
+alias root='cd /root'

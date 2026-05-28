@@ -1,0 +1,12 @@
+# Generated/runtime artifacts that shouldn't go into git
+update.log
+/tmp/etc_backup.tar.*
+*.png
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Note: keep the .mmd flowchart sources; render PNGs on demand.

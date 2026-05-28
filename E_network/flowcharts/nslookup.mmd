@@ -1,0 +1,11 @@
+%% Flowchart for nslookup_check.sh — WGU D796 Part E1/E4
+flowchart TD
+    A([Start nslookup_check.sh]) --> B{nslookup<br/>installed?}
+    B -- No --> Z[Print install hint] --> Y([Exit 2])
+    B -- Yes --> C[Set DOMAIN = example.com]
+    C --> D[Run: nslookup $DOMAIN, capture output]
+    D --> E{Resolved IPs<br/>found in output?}
+    E -- Yes --> F[Print &quot;DNS for example.com is working.&quot;<br/>Print resolved address]
+    F --> G([Exit 0])
+    E -- No --> H[Print &quot;ERROR: nslookup failed&quot;]
+    H --> I([Exit 1])

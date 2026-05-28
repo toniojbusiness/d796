@@ -1,0 +1,9 @@
+%% Flowchart for ping_dns.sh — WGU D796 Part E1/E3
+flowchart TD
+    A([Start ping_dns.sh]) --> B[Set DNS_IP = 8.8.8.8<br/>COUNT = 3, TIMEOUT = 5s]
+    B --> C[Run: ping -c $COUNT -W $TIMEOUT $DNS_IP]
+    C --> D{Exit code == 0?}
+    D -- Yes --> E[Print &quot;Connection to Google DNS is up.&quot;]
+    E --> F([Exit 0])
+    D -- No --> G[Print &quot;Connection to Google DNS failed.&quot;]
+    G --> H([Exit 1])
