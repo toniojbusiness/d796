@@ -12,6 +12,11 @@ sudo -i
 cd ~/d796/D_packages
 chmod +x install_vim.sh update_packages.sh
 
+# If a previous run left an apt lock behind, clear it:
+killall -9 apt apt-get dpkg 2>/dev/null
+rm -f /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock
+dpkg --configure -a 2>/dev/null
+
 # Remove any stale log so the demo creates a fresh one
 rm -f update.log
 
@@ -26,7 +31,7 @@ clear
 ## 🔴 RECORDING STARTS HERE
 
 ### 🎙️ SAY
-> "Hello, my name is Tonio Jenkins. This is Part D of the WGU D796 task. In this part I will demonstrate two package-management scripts: one that installs vim if it is missing, and one that updates all installed packages and saves the output to a log file."
+> "Hello, my name is Tonio Jenkins. This is Part D of the WGU D796 task. In this part I will demonstrate two package-management scripts: one that installs vim if it is missing, and one that updates the package lists and previews any available upgrades, saving the output to a log file."
 
 ### 🎙️ SAY
 > "First, the install vim script."
@@ -73,10 +78,10 @@ cat update_packages.sh
 ```
 
 ### 🎙️ SAY
-> "The script defines `update.log` as the log file. It writes a banner with the date and hostname to the log, then runs three commands inside a grouped block: `apt-get update`, `apt-get upgrade`, and `apt-get autoremove`. Both standard output and standard error are appended to the log file. After the update, the script displays the last ten lines of the log so I get immediate feedback."
+> "The script has two modes — demo mode and real mode. In demo mode, which is the default, it runs `apt-get update` to refresh the package list and then runs `apt-get -s upgrade` to simulate the upgrade. The simulation prints every package that would be upgraded without actually downloading or installing them. Adding the `--real` flag would run the actual `apt-get upgrade`. Both modes write the full output to `update.log` so the result is verifiable."
 
 ### 🎙️ SAY
-> "Now I will run it."
+> "Now I will run it in demo mode."
 
 ### ⌨️ TYPE
 ```bash
@@ -84,7 +89,7 @@ cat update_packages.sh
 ```
 
 ### 🎙️ SAY
-> "The script ran. It is silent during apt because all that output is being written to the log file. When apt finished, the script printed the last ten lines of the log so we can confirm everything worked."
+> "The script ran. It is silent during apt because all that output is being written to the log file. When apt finished, the script printed the last fifteen lines of the log so we can confirm everything worked."
 
 ### 🎙️ SAY
 > "Let me show you the log file directly to prove it was saved."
@@ -92,13 +97,13 @@ cat update_packages.sh
 ### ⌨️ TYPE
 ```bash
 ls -l update.log
-head -5 update.log
-echo "---- last 10 lines ----"
-tail -10 update.log
+head -10 update.log
+echo "---- last 15 lines ----"
+tail -15 update.log
 ```
 
 ### 🎙️ SAY
-> "The file `update.log` exists. The first lines show the banner the script wrote, with the date and hostname. The last lines show the apt-get output. The packages were updated and the output was saved to the log file. This completes Part D. Thank you."
+> "The file `update.log` exists. The first lines show the banner the script wrote, with the date, hostname, and mode. The last lines show the apt output — the package list refresh and the simulated upgrade summary. The script updated the package lists, previewed every available upgrade, and saved the result to `update.log`. This completes Part D. Thank you."
 
 ## 🛑 STOP RECORDING
 
