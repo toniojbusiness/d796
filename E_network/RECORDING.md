@@ -1,16 +1,11 @@
-# Part E — Network Connection Scripts
+# Part E — Network Connection Scripts — Recording Teleprompter
 
-## 📋 Teacher's 4-step flow
-1. **Prepare an error-free script first.**
-2. **Start recording.**
-3. **Explain the code, then explain the output.**
-4. **Stop recording.**
-
-> 🎯 Goal: ~5-minute video covering all three scripts + the three flowcharts. Code walkthrough + live run + output explanation for each.
+> 📌 **How to use this file:** Read every 🎙️ **SAY** block out loud, word for word.
+> When you see ⌨️ **TYPE**, run that command and wait for it to finish.
 
 ---
 
-## ⚠️ DO BEFORE you press Record
+## ⚠️ Setup — DO this BEFORE you press Record
 
 ```bash
 cd ~/d796/E_network
@@ -23,137 +18,93 @@ sudo apt-get install -y -qq dnsutils iputils-ping
 clear
 ```
 
-Render the three flowcharts to PNG ahead of time (see `flowcharts/README.md`). Have them open in another tab so you can show them on camera.
+Render the three flowcharts to PNG ahead of time (see `flowcharts/README.md`).
+Have them open in browser tabs so you can switch to them quickly during the recording.
 
 ---
 
-## 🔴 START RECORDING
+## 🔴 RECORDING STARTS HERE
 
-### Intro
-> "Part E — three network connectivity scripts. I'll start with the flowcharts that document the planned logic, then walk through each script's code, then run them and explain the output."
+### 🎙️ SAY
+> "Hello, my name is Tonio Jenkins. This is Part E of the WGU D796 RQN1 task. In this part I will demonstrate three network connectivity scripts: one that pings google.com, one that pings the Google DNS server at eight dot eight dot eight dot eight, and one that uses nslookup to resolve example dot com. I will also show the three flowcharts I drew for these scripts."
 
----
+### 🎙️ SAY
+> "First, the three flowcharts that satisfy rubric item E1."
 
-### 📖 Step 1 — Show the three flowcharts (rubric E1)
+> 🎬 *(Switch to the browser tab showing your three flowchart PNG images. Show each one for about three seconds while reading the next line.)*
 
-Open the three rendered PNGs (or `cat` the `.mmd` source if you didn't render):
+### 🎙️ SAY
+> "Each flowchart shows the same general structure: start, set the variables, run the network command, check the exit code, and print either the success message or the failure message. One flowchart per script. Rubric item E1 is satisfied."
 
-```bash
-cat flowcharts/ping_google.mmd
-cat flowcharts/ping_dns.mmd
-cat flowcharts/nslookup.mmd
-```
+> 🎬 *(Switch back to the terminal.)*
 
-> *"Three flowcharts — one per script. Each one shows the entry point, the variable setup, the network command, the decision diamond on the exit code, and the two terminal outputs. Rubric E1 satisfied."*
+### 🎙️ SAY
+> "Now the first script — ping google."
 
----
-
-### 📖 Step 2 — Show & explain `ping_google.sh`
-
+### ⌨️ TYPE
 ```bash
 cat ping_google.sh
 ```
 
-**Talking points:**
+### 🎙️ SAY
+> "The script defines three constants: the target is google dot com, the count is three packets, and the timeout is five seconds per packet. The `ping` command sends three ICMP echo requests, and I redirect both standard output and standard error to dev null because the script only cares about the exit code. If ping returns zero — meaning a reply was received — the script prints exactly `Network is up.` This is the exact phrase from rubric item E2 and E2a."
 
-1. **"`TARGET="google.com"`, `COUNT=3`, `TIMEOUT=5` — three readonly constants for the target host, packet count, and per-packet timeout."**
+### 🎙️ SAY
+> "Now I will run it."
 
-2. **"`ping -c "${COUNT}" -W "${TIMEOUT}" "${TARGET}"` sends three ICMP echo requests with a 5-second wait per packet. I redirect both stdout and stderr to `/dev/null` because the script only cares about the exit code."**
-
-3. **"If `ping` returns 0 — at least one reply received — I print exactly `Network is up.` (the rubric phrase) and exit 0. Otherwise I print a failure message and exit 1."**
-
-### 📺 Run it and explain output
-
+### ⌨️ TYPE
 ```bash
 ./ping_google.sh
 ```
 
-**Expected:**
-```
-[INFO] Pinging google.com (3 packets, 5s timeout)...
-Network is up.
-```
+### 🎙️ SAY
+> "The script printed `Network is up` — the exact rubric phrase. Rubric items E2 and E2a are satisfied."
 
-> *"`[INFO]` line confirms the target. Then `Network is up.` — exactly the rubric phrase. Rubric E2 and E2a satisfied."*
+### 🎙️ SAY
+> "Now the second script — ping the Google DNS IP."
 
----
-
-### 📖 Step 3 — Show & explain `ping_dns.sh`
-
+### ⌨️ TYPE
 ```bash
 cat ping_dns.sh
 ```
 
-**Talking points:**
+### 🎙️ SAY
+> "This script has the same structure as the previous one, but the target is the literal IP address eight dot eight dot eight dot eight, which is Google's public DNS server. Rubric item E3 specifically requires using the ping command against this IP, and that is exactly what the script does."
 
-4. **"Identical structure to `ping_google.sh`, but the target is `8.8.8.8` — Google's public DNS resolver. Rubric E3 specifically says to use ping against the IP, not DNS lookup, so this is a literal ICMP ping by IP address."**
+### 🎙️ SAY
+> "Now I will run it."
 
-### 📺 Run it and explain output
-
+### ⌨️ TYPE
 ```bash
 ./ping_dns.sh
 ```
 
-**Expected:**
-```
-[INFO] Pinging Google DNS at 8.8.8.8 (3 packets, 5s timeout)...
-Connection to Google DNS (8.8.8.8) is up.
-```
+### 🎙️ SAY
+> "The output confirms the connection to Google DNS at eight dot eight dot eight dot eight is up. Rubric item E3 is satisfied."
 
-> *"`Connection to Google DNS (8.8.8.8) is up.` — rubric E3 satisfied. The IP is correct, ping is the tool, the result is reported."*
+### 🎙️ SAY
+> "Now the third script — DNS lookup with nslookup."
 
----
-
-### 📖 Step 4 — Show & explain `nslookup_check.sh`
-
+### ⌨️ TYPE
 ```bash
 cat nslookup_check.sh
 ```
 
-**Talking points:**
+### 🎙️ SAY
+> "The script sets the domain to example dot com — the exact domain named in rubric item E4. It first checks that the nslookup command is installed. Then it runs nslookup against the domain, captures the full output, and uses awk to pull the resolved IP addresses out of the answer section. If at least one address is found, the script prints a confirmation along with the IP."
 
-5. **"`DOMAIN="example.com"` — the rubric explicitly names this domain."**
+### 🎙️ SAY
+> "Now I will run it."
 
-6. **"First I `command -v nslookup` to make sure the binary is installed; if not, I print an install hint and exit. This makes the script self-documenting."**
-
-7. **"`nslookup "${DOMAIN}" 2>&1` runs the lookup and captures the full output (stdout + stderr) into `NSLOOKUP_OUTPUT`."**
-
-8. **"The `awk` pipeline parses the answer section — anything after the `Name:` line and any subsequent `Address:` lines — to extract just the resolved IPs. If we got at least one address, we print a confirmation and the IP."**
-
-### 📺 Run it and explain output
-
+### ⌨️ TYPE
 ```bash
 ./nslookup_check.sh
 ```
 
-**Expected (excerpt):**
-```
-Server:   ...
-Name:     example.com
-Address:  93.184.216.34
-
-DNS for example.com is working. Resolved address(es):
-93.184.216.34
-```
-
-> *"The first chunk is the raw nslookup output — server it queried, the name, and the address. Then my script's confirmation: `DNS for example.com is working.` followed by the resolved IP. Rubric E4 satisfied — nslookup correctly resolved example.com."*
-
----
-
-### Closing
-> "Part E complete. Three flowcharts shown, three scripts walked through, three live runs with the rubric-required output strings. E1 through E4 covered."
+### 🎙️ SAY
+> "The first part of the output is the raw nslookup response — it shows the DNS server, the name example dot com, and the resolved IP address. Below that is my script's confirmation: `DNS for example.com is working`, followed by the resolved IP. Rubric item E4 is satisfied — nslookup correctly resolved example.com. This completes Part E. Three flowcharts shown, three scripts demonstrated, all four rubric points covered. Thank you."
 
 ## 🛑 STOP RECORDING
-
----
-
-## 💬 If you misspeak
-
-Restart from one of:
-- "Three flowcharts..." (cat the .mmd files)
-- "First script — ping google..." (`cat ping_google.sh`)
-- "Second script — ping DNS..." (`cat ping_dns.sh`)
-- "Third script — nslookup..." (`cat nslookup_check.sh`)
 
 ---
 
@@ -161,8 +112,8 @@ Restart from one of:
 
 | Rubric | Where |
 |---|---|
-| E1 — three flowcharts | Step 1 |
+| E1 — three flowcharts | The browser tab section at the top |
 | E2 — pings google.com | `./ping_google.sh` |
-| E2a — "Network is up." | output of `./ping_google.sh` |
+| E2a — "Network is up." | The output of `./ping_google.sh` |
 | E3 — pings 8.8.8.8 | `./ping_dns.sh` |
 | E4 — nslookup of example.com | `./nslookup_check.sh` |

@@ -1,23 +1,18 @@
-# Part F — `disk_cleanup.sh`
+# Part F — `disk_cleanup.sh` — Recording Teleprompter
 
-## 📋 Teacher's 4-step flow
-1. **Prepare an error-free script first.**
-2. **Start recording.**
-3. **Explain the code, then explain the output.**
-4. **Stop recording.**
-
-> 🎯 Goal: ~4-minute video showing the script's structure (df capture, cleanDir, array, for-loop, diff report) + two runs to demo BOTH the "freed N KB" and the "No significant disk space was freed" branches.
+> 📌 **How to use this file:** Read every 🎙️ **SAY** block out loud, word for word.
+> When you see ⌨️ **TYPE**, run that command and wait for it to finish.
 
 ---
 
-## ⚠️ DO BEFORE you press Record
+## ⚠️ Setup — DO this BEFORE you press Record
 
 ```bash
 sudo -i
 cd ~/d796/F_disk_cleanup
 chmod +x disk_cleanup.sh
 
-# Generate some junk so the FIRST run actually frees space
+# Generate junk so the FIRST run actually frees space
 mkdir -p /var/log/d796_demo /root/.cache/d796_demo
 dd if=/dev/zero of=/var/log/d796_demo/junk.bin     bs=1M count=20 2>/dev/null
 dd if=/dev/zero of=/root/.cache/d796_demo/junk.bin bs=1M count=20 2>/dev/null
@@ -28,72 +23,57 @@ clear
 
 ---
 
-## 🔴 START RECORDING
+## 🔴 RECORDING STARTS HERE
 
-### Intro
-> "Part F — disk cleanup. The script captures free disk space, cleans a list of directories, then reports the difference. I'll cover all five rubric points: the df capture, the cleanDir function, the directory list, the for loop, and the difference report."
+### 🎙️ SAY
+> "Hello, my name is Tonio Jenkins. This is Part F of the WGU D796 RQN1 task. In this part I will demonstrate the disk cleanup script. The script captures the free disk space on the root partition, defines a `cleanDir` function, declares a list of directories to clean, iterates over that list with a for loop, and reports the difference in free space at the end."
 
----
+### 🎙️ SAY
+> "Let me show you the code first."
 
-### 📖 Step 1 — Show & explain the code
-
+### ⌨️ TYPE
 ```bash
 cat disk_cleanup.sh
 ```
 
-**Talking points (one paragraph each — point at the relevant block as you go):**
+### 🎙️ SAY
+> "Near the top of the script, the line `SPACE_BEFORE_KB` runs `df --output=avail /` and stores the available kilobytes on the root partition into a variable. This satisfies rubric item F1 — finding free space using the df command and storing it in a variable."
 
-1. **"Rubric **F1** — `SPACE_BEFORE_KB="$(df --output=avail / | tail -n 1 | tr -d ' ')"`. `df --output=avail /` prints just the available column for the root partition; `tail -n 1` skips the header; `tr -d ' '` strips whitespace. The result is the free KB count, stored in a variable."**
+### 🎙️ SAY
+> "Below that is the `cleanDir` function, which satisfies rubric item F2. It takes one argument — a directory path — validates that the argument was given and the directory exists, then uses `find` with `-mindepth 1` and `-exec rm -rf` to delete everything inside the directory while keeping the directory itself."
 
-2. **"I also capture `SPACE_BEFORE_HUMAN` from `df -h` for a friendly display value."**
+### 🎙️ SAY
+> "Next is the `DIRS_TO_CLEAN` array, which satisfies rubric item F3. It contains `/var/log`, the home cache directory, and `/tmp`."
 
-3. **"Rubric **F2** — `cleanDir()` is the function. It takes one argument, validates it, makes sure the directory exists, then runs `find <dir> -mindepth 1 -exec rm -rf {} +`. `-mindepth 1` keeps the directory itself; everything inside gets deleted, including hidden files."**
+### 🎙️ SAY
+> "Below that is the for loop, which satisfies rubric item F4. It iterates over the array and calls `cleanDir` on each element."
 
-4. **"Rubric **F3** — `DIRS_TO_CLEAN=( "/var/log" "${HOME}/.cache" "/tmp" )`. A bash array that lists every directory I want cleaned. Adding more is a one-line change."**
+### 🎙️ SAY
+> "After the loop, the script reads `df` again, calculates the difference in kilobytes, and either reports the freed amount or prints exactly the words `No significant disk space was freed`. This is the rubric phrase from F5."
 
-5. **"Rubric **F4** — `for dir in "${DIRS_TO_CLEAN[@]}"; do cleanDir "${dir}"; done`. A for loop iterates the array and calls `cleanDir` on each element."**
+### 🎙️ SAY
+> "Now I will run the script. Off camera I created some junk files in those directories, so this first run should actually free space."
 
-6. **"Rubric **F5** — after the loop I re-read `df` into `SPACE_AFTER_KB`, compute `DIFF_KB = SPACE_AFTER_KB - SPACE_BEFORE_KB`, then `if (( DIFF_KB > 0 ))` either reports the freed KB and approximate MB, or — when the difference is zero or negative — prints exactly `No significant disk space was freed`, the rubric phrase."**
-
----
-
-### 📺 Step 2 — Run #1 (with junk to clean)
-
+### ⌨️ TYPE
 ```bash
 ./disk_cleanup.sh
 ```
 
-**Walk through the output:**
+### 🎙️ SAY
+> "The output shows the free space before the cleanup, the list of directories about to be cleaned, the cleanup happening for each directory through the for loop, the free space after the cleanup, and the difference reported in kilobytes and approximate megabytes. F1 through F5 are all working."
 
-> *"Banner showing the start. `Free space on / before cleanup` shows the captured value — F1 working."*
-> *"`Directories to clean:` lists `/var/log`, `/root/.cache`, `/tmp` — F3 working."*
-> *"For each directory: `[INFO] Cleaning ...` and `[OK] ... cleaned` — that's the for-loop calling cleanDir, F4 working."*
-> *"Bottom: `Free space on / after cleanup` shows the new value — note it's higher than before."*
-> *"`Freed 39800 KB (~38 MB) of disk space.` — F5 working in the positive branch."*
+### 🎙️ SAY
+> "Now to demonstrate the second branch of F5, I will run the script again. The directories are already empty, so the difference will be zero."
 
-### 📺 Step 3 — Run #2 (nothing left to clean)
-
+### ⌨️ TYPE
 ```bash
 ./disk_cleanup.sh
 ```
 
-> *"Now the directories are already empty, so the difference is zero. The last line is `No significant disk space was freed` — verbatim the rubric phrase. F5's other branch confirmed."*
-
----
-
-### Closing
-> "Part F complete. `df` captured into a variable, `cleanDir` function correctly implemented, directory list correct, for-loop working, and both branches of the difference report — including the exact 'No significant disk space was freed' message — demonstrated."
+### 🎙️ SAY
+> "The last line of the output is `No significant disk space was freed` — verbatim the rubric phrase. Both branches of rubric item F5 are demonstrated. This completes Part F. F1 through F5 all covered. Thank you."
 
 ## 🛑 STOP RECORDING
-
----
-
-## 💬 If you misspeak
-
-Restart from one of:
-- Top (`cat disk_cleanup.sh`)
-- "Run 1..." (`./disk_cleanup.sh` first time)
-- "Run 2..." (`./disk_cleanup.sh` second time)
 
 ---
 
@@ -101,8 +81,8 @@ Restart from one of:
 
 | Rubric | Where |
 |---|---|
-| F1 — `df` captures into variable | Code walkthrough point 1 + Run 1 banner |
-| F2 — `cleanDir()` correctly implemented | Code walkthrough point 3 |
-| F3 — list variable contains required dirs | Code walkthrough point 4 + "Directories to clean" output |
-| F4 — `for` loop calls `cleanDir()` | Code walkthrough point 5 + Run 1 cleaning output |
-| F5 — diff reported, including "No significant disk space was freed" | Run 1 (positive) + Run 2 (negative) |
+| F1 — `df` captures into a variable | The first run's "Free space on / before cleanup" line |
+| F2 — `cleanDir()` correctly implemented | The `cat` block + the `[OK] cleaned` lines |
+| F3 — list variable contains required dirs | The "Directories to clean" output |
+| F4 — `for` loop calls `cleanDir()` | The first run's per-directory output |
+| F5 — diff reported, including "No significant disk space was freed" | First run (positive) + second run (zero) |

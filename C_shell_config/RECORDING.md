@@ -1,24 +1,20 @@
-# Part C — Shell Configuration
+# Part C — Shell Configuration — Recording Teleprompter
 
-## 📋 Teacher's 4-step flow
-1. **Prepare an error-free script first.**
-2. **Start recording.**
-3. **Explain the code, then explain the output.**
-4. **Stop recording.**
-
-> 🎯 Goal: ~5-minute video that shows the bash files **and** the live results: green `$` prompt, working aliases, working PATH for the bin scripts.
+> 📌 **How to use this file:** Read every 🎙️ **SAY** block out loud, word for word.
+> When you see ⌨️ **TYPE**, run that command and wait for it to finish.
+> Don't skip, don't improvise — just go top to bottom.
 
 ---
 
-## ⚠️ DO BEFORE you press Record
+## ⚠️ Setup — DO this BEFORE you press Record
 
-This is the most setup-heavy part. Run **everything** in this section before you start recording so the video is clean.
+This is the most setup-heavy part. Run **everything** here off-camera first.
 
 ```bash
 sudo -i                                  # become root for the whole demo
 cd ~/d796/C_shell_config
 
-# 1) Install the aliases file at the spot ~/.bashrc expects
+# 1) Install the aliases file where ~/.bashrc expects it
 cp bash_aliases /root/.bash_aliases
 
 # 2) Append the prompt + sourcing + PATH stanza to /root/.bashrc, but only once
@@ -34,147 +30,163 @@ cp ../A_create_user/create_user.sh /root/bin/
 cp ../B_delete_user/delete_user.sh /root/bin/
 chmod +x /root/bin/create_user.sh /root/bin/delete_user.sh
 
-# 5) Make sure devuser does not exist
+# 5) Make sure devuser does not exist (so the demo at the end works)
 userdel -r devuser 2>/dev/null || true
 groupdel dev_group 2>/dev/null || true
 
 clear
 ```
 
-You're still in a root shell with the OLD prompt. That's intentional — the recording will show the prompt change happen live.
+Stay in the root shell — the prompt change should happen LIVE on camera.
 
 ---
 
-## 🔴 START RECORDING
+## 🔴 RECORDING STARTS HERE
 
-### Intro
-> "Hi, I'm Tonio Jenkins. This is Part C — shell configuration. I'll walk through the two configuration files, then source them, then run the aliases and the bin scripts to verify."
+### 🎙️ SAY
+> "Hello, my name is Tonio Jenkins. This is Part C of the WGU D796 RQN1 task. In this part I will demonstrate the shell configuration: a custom prompt, a separate aliases file, and a bin directory added to the PATH so my scripts run from any directory."
 
----
+### 🎙️ SAY
+> "First, let me show you the aliases file."
 
-### 📖 Step 1 — Show & explain the code
-
-#### File 1: the aliases file
-
+### ⌨️ TYPE
 ```bash
 cat ~/.bash_aliases
 ```
 
-**Talking points:**
+### 🎙️ SAY
+> "This is the separate aliases file required by rubric item C2. The first three aliases are shortcuts for common commands: `ll` runs `ls -lrt`, `la` runs `ls -a`, and `c` runs `clear`. The next three are navigation aliases: `desktop` jumps to the Desktop folder, `download` to Downloads, and `documents` to Documents."
 
-1. **"Rubric **C2** asks for shortcuts in a separate aliases file. I keep them in `~/.bash_aliases`. The `alias` keyword binds short names to longer commands."**
+### 🎙️ SAY
+> "Now let me show you the additions to the bashrc file."
 
-2. **"Top three: `ll` is `ls -lrt` (long listing, oldest first), `la` is `ls -a` (show hidden files), `c` is `clear`."**
-
-3. **"Bottom three are navigation aliases — `desktop`, `download`, `documents` — each does `cd "$HOME/<dir>"`. Because `$HOME` is expanded at use-time, these work for any user that sources the file."**
-
-#### File 2: the bashrc snippet
-
+### ⌨️ TYPE
 ```bash
 cat ~/d796/C_shell_config/bashrc_additions.sh
 ```
 
-**Talking points:**
+### 🎙️ SAY
+> "The `export PS1` line satisfies rubric item C1. It changes the prompt to a dollar sign and uses ANSI color escape sequences. The code `\e[1;32m` makes the dollar sign bright green, and `\e[1;36m` makes the shell text bright cyan. The prompt color and the shell text color are deliberately different."
 
-4. **"Rubric **C1** — `export PS1='\[\e[1;32m\]$\[\e[1;36m\] '`. `\e[1;32m` is the ANSI escape for bright green; the prompt symbol `$` will render in green. `\e[1;36m` is bright cyan, applied right after the `$` so anything I type into the shell is cyan. The prompt color and the shell-text color are deliberately different."**
+### 🎙️ SAY
+> "Below that, the `if -f .bash_aliases` block sources the aliases file we just looked at. The final block adds `$HOME/bin` to the front of the PATH variable, which is rubric item C4b — making my scripts runnable from any directory."
 
-5. **"The `\[ \]` wrappers around the escape sequences tell bash not to count those bytes when measuring prompt width — that prevents line-wrap glitches."**
+### 🎙️ SAY
+> "Now I will apply all of these changes from the command line, which is rubric item C3."
 
-6. **"The `trap 'printf "\e[0m"' DEBUG` line resets the color before each command runs so command **output** still appears in the default terminal color — keeps things readable."**
-
-7. **"Rubric **C2** integration — the `if [ -f "$HOME/.bash_aliases" ]; then . "$HOME/.bash_aliases"; fi` block sources the aliases file we just looked at."**
-
-8. **"Rubric **C4b** — `if [ -d "$HOME/bin" ] ; then PATH="$HOME/bin:$PATH"; fi` and `export PATH`. This adds the bin directory to the front of `PATH`, so any executable inside `~/bin` can be called by name from any directory."**
-
----
-
-### 📺 Step 2 — Apply and explain the output
-
-#### Step 2a — Apply the changes (rubric C3)
-
+### ⌨️ TYPE
 ```bash
 source ~/.bashrc
 ```
 
-> *"The prompt just changed. The dollar sign is green, and as soon as I start typing, my text shows up in cyan — two distinct colors. Rubric C1 satisfied."*
+### 🎙️ SAY
+> "The prompt has just changed to a green dollar sign, and the text I am about to type will appear in cyan — two distinct colors as required. Rubric item C1 is satisfied."
 
-> *"That `source` command is rubric C3 — applying the changes from the command line."*
+### 🎙️ SAY
+> "Now I will demonstrate the aliases."
 
-#### Step 2b — Demo the aliases (rubric C2 + C3)
-
+### ⌨️ TYPE
 ```bash
 ll
 ```
-> *"`ll` ran `ls -lrt`. You can see the long listing sorted by modification time."*
 
+### 🎙️ SAY
+> "The `ll` alias ran `ls -lrt` — a long listing sorted by modification time."
+
+### ⌨️ TYPE
 ```bash
 la
 ```
-> *"`la` ran `ls -a` — including the hidden dotfiles."*
 
+### 🎙️ SAY
+> "The `la` alias ran `ls -a` and showed the hidden files."
+
+### ⌨️ TYPE
 ```bash
 c
 ```
-> *"`c` cleared the screen — the third command alias works."*
 
+### 🎙️ SAY
+> "The `c` alias cleared the screen. Three command aliases verified."
+
+### ⌨️ TYPE
 ```bash
 desktop
 pwd
 ```
-> *"`desktop` jumped to `/root/Desktop` — confirmed by `pwd`."*
 
+### 🎙️ SAY
+> "The `desktop` alias took me straight to `/root/Desktop`, confirmed by `pwd`."
+
+### ⌨️ TYPE
 ```bash
 download
 pwd
+```
+
+### 🎙️ SAY
+> "The `download` alias took me to `/root/Downloads`."
+
+### ⌨️ TYPE
+```bash
 documents
 pwd
 cd ~
 ```
-> *"`download` and `documents` work the same way. All six aliases verified — rubric C2 fully satisfied, and these were applied live from the command line so C3 is also covered."*
 
-#### Step 2c — Verify the bin directory and PATH (rubric C4)
+### 🎙️ SAY
+> "And the `documents` alias took me to `/root/Documents`. All six aliases work, satisfying rubric item C2 and rubric item C3."
 
+### 🎙️ SAY
+> "Now I will show the bin directory and the PATH update, which is rubric item C4."
+
+### ⌨️ TYPE
 ```bash
 ls -l /root/bin
 ```
-> *"Rubric **C4a** — `/root/bin` exists and contains both `create_user.sh` and `delete_user.sh`, executable."*
 
+### 🎙️ SAY
+> "The bin directory exists and contains both `create_user.sh` and `delete_user.sh`, both executable. This satisfies rubric item C4a."
+
+### ⌨️ TYPE
 ```bash
 echo "$PATH"
 which create_user.sh
 which delete_user.sh
 ```
-> *"Rubric **C4b** — `/root/bin` is on PATH. `which` resolves both scripts to `/root/bin/<name>`."*
 
-#### Step 2d — Run BOTH scripts from a non-bin directory (rubric C4c)
+### 🎙️ SAY
+> "The PATH variable includes `/root/bin`, and `which` confirms both scripts are resolved from that location. This satisfies rubric item C4b."
 
+### 🎙️ SAY
+> "Finally, I will run both scripts from a directory that is NOT bin, to prove the PATH update works."
+
+### ⌨️ TYPE
 ```bash
 cd /tmp
 pwd
+```
+
+### 🎙️ SAY
+> "I am now in `/tmp`, not in `/root/bin`. Watch as I call both scripts by name only."
+
+### ⌨️ TYPE
+```bash
 create_user.sh devuser
-echo "---- now delete ----"
+```
+
+### 🎙️ SAY
+> "The create_user script ran successfully from `/tmp` — the user was created, the password was assigned. Now the delete script."
+
+### ⌨️ TYPE
+```bash
 echo yes | delete_user.sh devuser
 ```
 
-> *"I'm in `/tmp`, NOT in `/root/bin`. `create_user.sh` ran by name and successfully created the user — output shows the dev_group creation, the user creation, the password assignment. Then I piped `yes` into `delete_user.sh` to non-interactively confirm the deletion. Both scripts ran from a directory other than bin, satisfying rubric **C4c**."*
-
----
-
-### Closing
-> "Part C complete. The prompt is `$` with green-on-cyan coloring, the aliases file works, the bin directory is on PATH, and both scripts run from `/tmp` — every C1 through C4c rubric item covered."
+### 🎙️ SAY
+> "The delete script also ran from `/tmp`. I piped yes into it to non-interactively confirm the deletion. Both scripts ran from a directory other than bin, which satisfies rubric item C4c. This completes Part C — the prompt is changed with two colors, the aliases file is in place and working, and the bin directory is on the PATH so my scripts run from anywhere. Thank you."
 
 ## 🛑 STOP RECORDING
-
----
-
-## 💬 If you misspeak
-
-Restart from any of:
-- Top (`cat ~/.bash_aliases`)
-- "Now I'll apply the changes..." (`source ~/.bashrc`)
-- Aliases demo (`ll`)
-- "Now I'll verify the bin directory..." (`ls -l /root/bin`)
-- "Now from a non-bin directory..." (`cd /tmp`)
 
 ---
 
@@ -182,9 +194,9 @@ Restart from any of:
 
 | Rubric | Where |
 |---|---|
-| C1 — `$` prompt + two colors | `source ~/.bashrc` moment |
-| C2 — aliases file | `cat ~/.bash_aliases` + each alias demo |
-| C3 — applied from command line + verified | `source` + alias demo |
-| C4a — `/root/bin` with both scripts | `ls -l /root/bin` |
+| C1 — `$` prompt with two colors | After `source ~/.bashrc` |
+| C2 — aliases file | `cat ~/.bash_aliases` and each alias demo |
+| C3 — applied from command line and verified | `source` + alias demo |
+| C4a — bin directory with both scripts | `ls -l /root/bin` |
 | C4b — PATH includes bin | `which` outputs |
-| C4c — run from non-bin directory | `cd /tmp` then run |
+| C4c — execution from a non-bin directory | The `/tmp` runs at the end |

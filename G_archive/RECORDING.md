@@ -1,16 +1,11 @@
-# Part G — `archive_etc.sh`
+# Part G — `archive_etc.sh` — Recording Teleprompter
 
-## 📋 Teacher's 4-step flow
-1. **Prepare an error-free script first.**
-2. **Start recording.**
-3. **Explain the code, then explain the output.**
-4. **Stop recording.**
-
-> 🎯 Goal: ~4-minute video showing the `fileSize()` function, the two tar/compress invocations, and the size-difference report.
+> 📌 **How to use this file:** Read every 🎙️ **SAY** block out loud, word for word.
+> When you see ⌨️ **TYPE**, run that command and wait for it to finish.
 
 ---
 
-## ⚠️ DO BEFORE you press Record
+## ⚠️ Setup — DO this BEFORE you press Record
 
 ```bash
 sudo -i
@@ -20,7 +15,7 @@ chmod +x archive_etc.sh
 # Clean any leftover archives
 rm -f /tmp/etc_backup.tar.gz /tmp/etc_backup.tar.bz2
 
-# Make sure bzip2 is available (gzip and tar are everywhere already)
+# Make sure bzip2 is installed
 apt-get install -y -qq bzip2 >/dev/null
 
 clear
@@ -28,74 +23,58 @@ clear
 
 ---
 
-## 🔴 START RECORDING
+## 🔴 RECORDING STARTS HERE
 
-### Intro
-> "Part G — archive `/etc` with both gzip and bzip2, then compare the two compression sizes using a `fileSize()` function. I'll walk through the code, then run it, then explain the output."
+### 🎙️ SAY
+> "Hello, my name is Tonio Jenkins. This is Part G of the WGU D796 RQN1 task. In this part I will demonstrate the archive script. The script defines a `fileSize` function, archives the etc directory using both gzip and bzip2 compression, and reports the size of each archive and the difference between them."
 
----
+### 🎙️ SAY
+> "Let me show you the code first."
 
-### 📖 Step 1 — Show & explain the code
-
+### ⌨️ TYPE
 ```bash
 cat archive_etc.sh
 ```
 
-**Talking points:**
+### 🎙️ SAY
+> "Near the top, the `fileSize` function satisfies rubric item G1. It takes one argument — a file path — validates that the argument was given and the file exists, then uses `stat -c%s` to return the size of the file in bytes."
 
-1. **"`OUTDIR="/tmp"`, plus the two archive paths `GZIP_ARCHIVE` and `BZIP2_ARCHIVE` — readonly constants so they can't be modified."**
+### 🎙️ SAY
+> "The next block runs `tar -czf` against the etc directory. The `-c` flag means create, `-z` means use gzip, and `-f` writes to the named file. This satisfies rubric item G2 — archive and compress the etc directory using tar and gzip."
 
-2. **"Rubric **G1** — `fileSize()` is the function. It takes one argument, validates that an argument was passed and that it points to a regular file, then runs `stat -c%s` which returns the size in bytes. Single-purpose, single source of truth."**
+### 🎙️ SAY
+> "The block after that is the same idea, but uses `tar -cjf`. The `-j` flag uses bzip2 instead of gzip. This satisfies rubric item G3 — archive and compress the same etc directory using tar and bzip2."
 
-3. **"`humanSize()` is a small helper using `numfmt --to=iec` to display the size as MiB or KiB — it's just for human-readable output, not part of the rubric."**
+### 🎙️ SAY
+> "Below that, the script calls `fileSize` on each archive and stores the result in a variable. This satisfies rubric item G4 — calculating the size of the two compressed files using the `fileSize` function."
 
-4. **"Rubric **G2** — `tar -czf "${GZIP_ARCHIVE}" -C / etc`. `-c` create, `-z` use gzip, `-f` write to this file. The `-C /` makes tar change to root before reading paths so the archive contains a relative `etc/` tree instead of absolute paths — that's a portability best practice."**
+### 🎙️ SAY
+> "Finally, the script subtracts the bzip2 size from the gzip size and prints the difference, indicating which compression algorithm produced the smaller file. This satisfies rubric item G5."
 
-5. **"Rubric **G3** — same idea but `-cjf` instead of `-czf`. The `-j` flag uses bzip2 instead of gzip. Same input directory, same output approach."**
+### 🎙️ SAY
+> "Now I will run the script. The bzip2 archive will take a few seconds to create."
 
-6. **"Rubric **G4** — I call `fileSize "${GZIP_ARCHIVE}"` and `fileSize "${BZIP2_ARCHIVE}"`, capturing the bytes into `GZIP_SIZE` and `BZIP2_SIZE`. The function is the single source for both numbers."**
-
-7. **"Rubric **G5** — `DIFF=$(( GZIP_SIZE - BZIP2_SIZE ))`. The `if/elif/else` checks the sign and prints which algorithm produced the smaller archive and by how many bytes."**
-
----
-
-### 📺 Step 2 — Run the script and explain the output
-
+### ⌨️ TYPE
 ```bash
 ./archive_etc.sh
 ```
 
-**Walk through the output:**
+### 🎙️ SAY
+> "The output shows the gzip archive being created, then the bzip2 archive being created. The next section is titled `Compressed archive sizes via fileSize` — both sizes were measured by my function, satisfying rubric item G4. The final section displays the difference between the two algorithms in bytes, satisfying rubric item G5."
 
-> *"`Archiving /etc with tar + gzip` ... `[OK] Created /tmp/etc_backup.tar.gz` — that's rubric G2 done."*
-> *"`Archiving /etc with tar + bzip2` ... `[OK] Created /tmp/etc_backup.tar.bz2` — that's rubric G3 done."*
-> *"`Compressed archive sizes (via fileSize)` — note `via fileSize` in the header. The next two lines come from calling `fileSize()` on each archive: gzip is X bytes, bzip2 is Y bytes. That's rubric G4."*
-> *"`Difference between the two compression algorithms` — bzip2 was smaller than gzip by Z bytes. Rubric G5."*
+### 🎙️ SAY
+> "Let me also verify with native tools that the archives are real."
 
-### 📺 Step 3 — Verify with native tools
-
+### ⌨️ TYPE
 ```bash
 ls -lh /tmp/etc_backup.tar.gz /tmp/etc_backup.tar.bz2
 file /tmp/etc_backup.tar.gz /tmp/etc_backup.tar.bz2
 ```
 
-> *"`ls -lh` shows the actual file sizes match what `fileSize()` reported. `file` confirms the gzip and bzip2 magic numbers are present — these are real, valid compressed tarballs."*
-
----
-
-### Closing
-> "Part G complete. `fileSize()` function defined and used twice, gzip archive created, bzip2 archive created, both sizes pulled via `fileSize()`, and the difference between the two compression algorithms reported. G1 through G5 covered."
+### 🎙️ SAY
+> "`ls -lh` shows the file sizes match what `fileSize` reported. The `file` command confirms one is a gzip archive and the other is a bzip2 archive — both are valid compressed tarballs. This completes Part G. The `fileSize` function is implemented and used, gzip and bzip2 archives are created, and the difference between the two algorithms is displayed. G1 through G5 all covered. Thank you."
 
 ## 🛑 STOP RECORDING
-
----
-
-## 💬 If you misspeak
-
-Restart from one of:
-- Top (`cat archive_etc.sh`)
-- "Now I'll run it..." (`./archive_etc.sh`)
-- "Let's verify..." (`ls -lh /tmp/etc_backup.tar.*`)
 
 ---
 
@@ -103,7 +82,7 @@ Restart from one of:
 
 | Rubric | Where |
 |---|---|
-| G1 — `fileSize()` implemented | Code walkthrough point 2 |
+| G1 — `fileSize()` implemented | The `cat archive_etc.sh` walkthrough |
 | G2 — gzip tar | "Created /tmp/etc_backup.tar.gz" line |
 | G3 — bzip2 tar | "Created /tmp/etc_backup.tar.bz2" line |
 | G4 — sizes via `fileSize()` | "Compressed archive sizes (via fileSize)" block |
