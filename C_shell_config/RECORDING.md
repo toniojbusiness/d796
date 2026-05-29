@@ -44,7 +44,7 @@ Stay in the root shell — the prompt change should happen LIVE on camera.
 ## 🔴 RECORDING STARTS HERE
 
 ### 🎙️ SAY
-> "Hello, my name is Tonio Jenkins. This is Part C of the WGU D796 RQN1 task. In this part I will demonstrate the shell configuration: a custom prompt, a separate aliases file, and a bin directory added to the PATH so my scripts run from any directory."
+> "Hello, my name is Tonio Jenkins. This is Part C of the WGU D796 task. In this part I will demonstrate the shell configuration: a custom prompt, a separate aliases file, and a bin directory added to the PATH so my scripts run from any directory."
 
 ### 🎙️ SAY
 > "First, let me show you the aliases file."
@@ -55,7 +55,7 @@ cat ~/.bash_aliases
 ```
 
 ### 🎙️ SAY
-> "This is the separate aliases file required by rubric item C2. The first three aliases are shortcuts for common commands: `ll` runs `ls -lrt`, `la` runs `ls -a`, and `c` runs `clear`. The next three are navigation aliases: `desktop` jumps to the Desktop folder, `download` to Downloads, and `documents` to Documents."
+> "This is the separate aliases file. The first three aliases are shortcuts for common commands: `ll` runs `ls -lrt`, `la` runs `ls -a`, and `c` runs `clear`. The next three are navigation aliases: `desktop` jumps to the Desktop folder, `download` to Downloads, and `documents` to Documents."
 
 ### 🎙️ SAY
 > "Now let me show you the additions to the bashrc file."
@@ -66,13 +66,13 @@ cat ~/d796/C_shell_config/bashrc_additions.sh
 ```
 
 ### 🎙️ SAY
-> "The `export PS1` line satisfies rubric item C1. It changes the prompt to a dollar sign and uses ANSI color escape sequences. The code `\e[1;32m` makes the dollar sign bright green, and `\e[1;36m` makes the shell text bright cyan. The prompt color and the shell text color are deliberately different."
+> "The `export PS1` line changes the prompt to a dollar sign and uses ANSI color escape sequences. The code `\e[1;32m` makes the dollar sign bright green, and `\e[1;36m` makes the shell text bright cyan, so the prompt color and the shell text color are deliberately different."
 
 ### 🎙️ SAY
-> "Below that, the `if -f .bash_aliases` block sources the aliases file we just looked at. The final block adds `$HOME/bin` to the front of the PATH variable, which is rubric item C4b — making my scripts runnable from any directory."
+> "Below that, the `if -f .bash_aliases` block sources the aliases file we just looked at. The final block adds `$HOME/bin` to the front of the PATH variable, which makes any script in that directory runnable from anywhere."
 
 ### 🎙️ SAY
-> "Now I will apply all of these changes from the command line, which is rubric item C3."
+> "Now I will apply all of these changes from the command line."
 
 ### ⌨️ TYPE
 ```bash
@@ -80,7 +80,7 @@ source ~/.bashrc
 ```
 
 ### 🎙️ SAY
-> "The prompt has just changed to a green dollar sign, and the text I am about to type will appear in cyan — two distinct colors as required. Rubric item C1 is satisfied."
+> "The prompt has just changed to a green dollar sign, and the text I am about to type will appear in cyan — two distinct colors."
 
 ### 🎙️ SAY
 > "Now I will demonstrate the aliases."
@@ -135,10 +135,10 @@ cd ~
 ```
 
 ### 🎙️ SAY
-> "And the `documents` alias took me to `/root/Documents`. All six aliases work, satisfying rubric item C2 and rubric item C3."
+> "And the `documents` alias took me to `/root/Documents`. All six aliases work."
 
 ### 🎙️ SAY
-> "Now I will show the bin directory and the PATH update, which is rubric item C4."
+> "Now I will show the bin directory and the PATH update."
 
 ### ⌨️ TYPE
 ```bash
@@ -146,7 +146,7 @@ ls -l /root/bin
 ```
 
 ### 🎙️ SAY
-> "The bin directory exists and contains both `create_user.sh` and `delete_user.sh`, both executable. This satisfies rubric item C4a."
+> "The bin directory exists and contains both `create_user.sh` and `delete_user.sh`, both executable."
 
 ### ⌨️ TYPE
 ```bash
@@ -156,7 +156,7 @@ which delete_user.sh
 ```
 
 ### 🎙️ SAY
-> "The PATH variable includes `/root/bin`, and `which` confirms both scripts are resolved from that location. This satisfies rubric item C4b."
+> "The PATH variable includes `/root/bin`, and `which` confirms both scripts are resolved from that location."
 
 ### 🎙️ SAY
 > "Finally, I will run both scripts from a directory that is NOT bin, to prove the PATH update works."
@@ -184,13 +184,13 @@ echo yes | delete_user.sh devuser
 ```
 
 ### 🎙️ SAY
-> "The delete script also ran from `/tmp`. I piped yes into it to non-interactively confirm the deletion. Both scripts ran from a directory other than bin, which satisfies rubric item C4c. This completes Part C — the prompt is changed with two colors, the aliases file is in place and working, and the bin directory is on the PATH so my scripts run from anywhere. Thank you."
+> "The delete script also ran from `/tmp`. I piped yes into it to non-interactively confirm the deletion. Both scripts ran from a directory other than bin. This completes Part C. Thank you."
 
 ## 🛑 STOP RECORDING
 
 ---
 
-## Rubric coverage
+## Rubric coverage (for your reference — do NOT mention in the video)
 
 | Rubric | Where |
 |---|---|

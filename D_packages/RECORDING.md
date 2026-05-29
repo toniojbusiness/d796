@@ -26,7 +26,7 @@ clear
 ## 🔴 RECORDING STARTS HERE
 
 ### 🎙️ SAY
-> "Hello, my name is Tonio Jenkins. This is Part D of the WGU D796 RQN1 task. In this part I will demonstrate two package-management scripts: one that installs vim if it is missing, and one that updates all installed packages and saves the output to a log file."
+> "Hello, my name is Tonio Jenkins. This is Part D of the WGU D796 task. In this part I will demonstrate two package-management scripts: one that installs vim if it is missing, and one that updates all installed packages and saves the output to a log file."
 
 ### 🎙️ SAY
 > "First, the install vim script."
@@ -37,10 +37,10 @@ cat install_vim.sh
 ```
 
 ### 🎙️ SAY
-> "The script defines a constant for the package name, then uses `dpkg -s vim` to ask the package database whether vim is installed. The grep filters for the exact status string that means it is installed. If that grep succeeds, the script prints exactly the words `Vim is already installed` and exits — that is the rubric phrase."
+> "The script defines a constant for the package name, then uses `dpkg -s vim` to ask the package database whether vim is installed. The grep filters for the exact status string that means it is installed. If that grep succeeds, the script prints `Vim is already installed` and exits."
 
 ### 🎙️ SAY
-> "Otherwise, the script runs `apt-get update` and then `apt-get install vim`. I set `DEBIAN_FRONTEND` to noninteractive so the install does not pause for prompts. This satisfies rubric item D1."
+> "Otherwise, the script runs `apt-get update` and then `apt-get install vim`. I set `DEBIAN_FRONTEND` to noninteractive so the install does not pause for prompts."
 
 ### 🎙️ SAY
 > "Now I will run the script. Vim is currently uninstalled, so this first run should trigger the install path."
@@ -62,7 +62,7 @@ cat install_vim.sh
 ```
 
 ### 🎙️ SAY
-> "The output is exactly `Vim is already installed` — the rubric phrase. The script correctly detected that vim was already present and skipped the install. Rubric item D1 is fully satisfied."
+> "The output is exactly `Vim is already installed`. The script correctly detected that vim was already present and skipped the install."
 
 ### 🎙️ SAY
 > "Now the update packages script."
@@ -73,7 +73,7 @@ cat update_packages.sh
 ```
 
 ### 🎙️ SAY
-> "The script defines `update.log` as the log file. It writes a banner with the date and hostname to the log, then runs three commands inside a grouped block: `apt-get update`, `apt-get upgrade`, and `apt-get autoremove`. Both standard output and standard error are appended to the log file using `>> update.log 2>&1`. After the update, the script displays the last ten lines of the log so I get immediate feedback. This satisfies rubric item D2."
+> "The script defines `update.log` as the log file. It writes a banner with the date and hostname to the log, then runs three commands inside a grouped block: `apt-get update`, `apt-get upgrade`, and `apt-get autoremove`. Both standard output and standard error are appended to the log file. After the update, the script displays the last ten lines of the log so I get immediate feedback."
 
 ### 🎙️ SAY
 > "Now I will run it."
@@ -98,13 +98,13 @@ tail -10 update.log
 ```
 
 ### 🎙️ SAY
-> "The file `update.log` exists. The first lines show the banner the script wrote, with the date and hostname. The last lines show the apt-get output. Rubric item D2 is satisfied — packages were updated and the output is saved to `update.log`. This completes Part D. Thank you."
+> "The file `update.log` exists. The first lines show the banner the script wrote, with the date and hostname. The last lines show the apt-get output. The packages were updated and the output was saved to the log file. This completes Part D. Thank you."
 
 ## 🛑 STOP RECORDING
 
 ---
 
-## Rubric coverage
+## Rubric coverage (for your reference — do NOT mention in the video)
 
 | Rubric | Where |
 |---|---|

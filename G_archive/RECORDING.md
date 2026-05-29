@@ -26,7 +26,7 @@ clear
 ## 🔴 RECORDING STARTS HERE
 
 ### 🎙️ SAY
-> "Hello, my name is Tonio Jenkins. This is Part G of the WGU D796 RQN1 task. In this part I will demonstrate the archive script. The script defines a `fileSize` function, archives the etc directory using both gzip and bzip2 compression, and reports the size of each archive and the difference between them."
+> "Hello, my name is Tonio Jenkins. This is Part G of the WGU D796 task. In this part I will demonstrate the archive script. The script defines a `fileSize` function, archives the etc directory using both gzip and bzip2 compression, and reports the size of each archive and the difference between them."
 
 ### 🎙️ SAY
 > "Let me show you the code first."
@@ -37,19 +37,19 @@ cat archive_etc.sh
 ```
 
 ### 🎙️ SAY
-> "Near the top, the `fileSize` function satisfies rubric item G1. It takes one argument — a file path — validates that the argument was given and the file exists, then uses `stat -c%s` to return the size of the file in bytes."
+> "Near the top, the `fileSize` function takes one argument — a file path — validates that the argument was given and the file exists, then uses `stat -c%s` to return the size of the file in bytes."
 
 ### 🎙️ SAY
-> "The next block runs `tar -czf` against the etc directory. The `-c` flag means create, `-z` means use gzip, and `-f` writes to the named file. This satisfies rubric item G2 — archive and compress the etc directory using tar and gzip."
+> "The next block runs `tar -czf` against the etc directory. The `-c` flag means create, `-z` means use gzip, and `-f` writes to the named file."
 
 ### 🎙️ SAY
-> "The block after that is the same idea, but uses `tar -cjf`. The `-j` flag uses bzip2 instead of gzip. This satisfies rubric item G3 — archive and compress the same etc directory using tar and bzip2."
+> "The block after that is the same idea, but uses `tar -cjf`. The `-j` flag uses bzip2 instead of gzip."
 
 ### 🎙️ SAY
-> "Below that, the script calls `fileSize` on each archive and stores the result in a variable. This satisfies rubric item G4 — calculating the size of the two compressed files using the `fileSize` function."
+> "Below that, the script calls `fileSize` on each archive and stores the result in a variable."
 
 ### 🎙️ SAY
-> "Finally, the script subtracts the bzip2 size from the gzip size and prints the difference, indicating which compression algorithm produced the smaller file. This satisfies rubric item G5."
+> "Finally, the script subtracts the bzip2 size from the gzip size and prints the difference, indicating which compression algorithm produced the smaller file."
 
 ### 🎙️ SAY
 > "Now I will run the script. The bzip2 archive will take a few seconds to create."
@@ -60,7 +60,7 @@ cat archive_etc.sh
 ```
 
 ### 🎙️ SAY
-> "The output shows the gzip archive being created, then the bzip2 archive being created. The next section is titled `Compressed archive sizes via fileSize` — both sizes were measured by my function, satisfying rubric item G4. The final section displays the difference between the two algorithms in bytes, satisfying rubric item G5."
+> "The output shows the gzip archive being created, then the bzip2 archive being created. The next section is titled `Compressed archive sizes via fileSize` — both sizes were measured by my function. The final section displays the difference between the two algorithms in bytes."
 
 ### 🎙️ SAY
 > "Let me also verify with native tools that the archives are real."
@@ -72,13 +72,13 @@ file /tmp/etc_backup.tar.gz /tmp/etc_backup.tar.bz2
 ```
 
 ### 🎙️ SAY
-> "`ls -lh` shows the file sizes match what `fileSize` reported. The `file` command confirms one is a gzip archive and the other is a bzip2 archive — both are valid compressed tarballs. This completes Part G. The `fileSize` function is implemented and used, gzip and bzip2 archives are created, and the difference between the two algorithms is displayed. G1 through G5 all covered. Thank you."
+> "`ls -lh` shows the file sizes match what `fileSize` reported. The `file` command confirms one is a gzip archive and the other is a bzip2 archive — both are valid compressed tarballs. This completes Part G. Thank you."
 
 ## 🛑 STOP RECORDING
 
 ---
 
-## Rubric coverage
+## Rubric coverage (for your reference — do NOT mention in the video)
 
 | Rubric | Where |
 |---|---|

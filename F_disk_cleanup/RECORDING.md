@@ -26,7 +26,7 @@ clear
 ## 🔴 RECORDING STARTS HERE
 
 ### 🎙️ SAY
-> "Hello, my name is Tonio Jenkins. This is Part F of the WGU D796 RQN1 task. In this part I will demonstrate the disk cleanup script. The script captures the free disk space on the root partition, defines a `cleanDir` function, declares a list of directories to clean, iterates over that list with a for loop, and reports the difference in free space at the end."
+> "Hello, my name is Tonio Jenkins. This is Part F of the WGU D796 task. In this part I will demonstrate the disk cleanup script. The script captures the free disk space on the root partition, defines a `cleanDir` function, declares a list of directories to clean, iterates over that list with a for loop, and reports the difference in free space at the end."
 
 ### 🎙️ SAY
 > "Let me show you the code first."
@@ -37,19 +37,19 @@ cat disk_cleanup.sh
 ```
 
 ### 🎙️ SAY
-> "Near the top of the script, the line `SPACE_BEFORE_KB` runs `df --output=avail /` and stores the available kilobytes on the root partition into a variable. This satisfies rubric item F1 — finding free space using the df command and storing it in a variable."
+> "Near the top of the script, the line `SPACE_BEFORE_KB` runs `df --output=avail /` and stores the available kilobytes on the root partition into a variable."
 
 ### 🎙️ SAY
-> "Below that is the `cleanDir` function, which satisfies rubric item F2. It takes one argument — a directory path — validates that the argument was given and the directory exists, then uses `find` with `-mindepth 1` and `-exec rm -rf` to delete everything inside the directory while keeping the directory itself."
+> "Below that is the `cleanDir` function. It takes one argument — a directory path — validates that the argument was given and the directory exists, then uses `find` with `-mindepth 1` and `-exec rm -rf` to delete everything inside the directory while keeping the directory itself."
 
 ### 🎙️ SAY
-> "Next is the `DIRS_TO_CLEAN` array, which satisfies rubric item F3. It contains `/var/log`, the home cache directory, and `/tmp`."
+> "Next is the `DIRS_TO_CLEAN` array, which contains `/var/log`, the home cache directory, and `/tmp`."
 
 ### 🎙️ SAY
-> "Below that is the for loop, which satisfies rubric item F4. It iterates over the array and calls `cleanDir` on each element."
+> "Below that is the for loop. It iterates over the array and calls `cleanDir` on each element."
 
 ### 🎙️ SAY
-> "After the loop, the script reads `df` again, calculates the difference in kilobytes, and either reports the freed amount or prints exactly the words `No significant disk space was freed`. This is the rubric phrase from F5."
+> "After the loop, the script reads `df` again, calculates the difference in kilobytes, and either reports the freed amount or prints `No significant disk space was freed`."
 
 ### 🎙️ SAY
 > "Now I will run the script. Off camera I created some junk files in those directories, so this first run should actually free space."
@@ -60,10 +60,10 @@ cat disk_cleanup.sh
 ```
 
 ### 🎙️ SAY
-> "The output shows the free space before the cleanup, the list of directories about to be cleaned, the cleanup happening for each directory through the for loop, the free space after the cleanup, and the difference reported in kilobytes and approximate megabytes. F1 through F5 are all working."
+> "The output shows the free space before the cleanup, the list of directories about to be cleaned, the cleanup happening for each directory through the for loop, the free space after the cleanup, and the difference reported in kilobytes and approximate megabytes."
 
 ### 🎙️ SAY
-> "Now to demonstrate the second branch of F5, I will run the script again. The directories are already empty, so the difference will be zero."
+> "Now I will run the script a second time. The directories are already empty, so the difference will be zero."
 
 ### ⌨️ TYPE
 ```bash
@@ -71,13 +71,13 @@ cat disk_cleanup.sh
 ```
 
 ### 🎙️ SAY
-> "The last line of the output is `No significant disk space was freed` — verbatim the rubric phrase. Both branches of rubric item F5 are demonstrated. This completes Part F. F1 through F5 all covered. Thank you."
+> "The last line of the output is `No significant disk space was freed`. Both branches of the report are demonstrated. This completes Part F. Thank you."
 
 ## 🛑 STOP RECORDING
 
 ---
 
-## Rubric coverage
+## Rubric coverage (for your reference — do NOT mention in the video)
 
 | Rubric | Where |
 |---|---|
