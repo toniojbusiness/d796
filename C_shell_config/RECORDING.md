@@ -1,14 +1,20 @@
-# Part C — Shell Configuration — Recording Teleprompter
+# Part C — Shell Configuration — Recording Teleprompter (v2 — re-record)
 
 > 📌 **How to use this file:** Read every 🎙️ **SAY** block out loud, word for word.
 > When you see ⌨️ **TYPE**, run that command and wait for it to finish.
 > Don't skip, don't improvise — just go top to bottom.
 
+> ⚠️ **This is a re-record of Part C.** The evaluator's note: *"The Panopto video
+> displayed some of the aliases being executed in the terminal. The Panopto
+> video needs to display all of the aliases being executed in the terminal."*
+> This version explicitly demos every single alias with on-screen banners
+> labeling each one, then prints a final summary so all six are visible at once.
+
 ---
 
 ## ⚠️ Setup — DO this BEFORE you press Record
 
-This is the most setup-heavy part. Run **everything** here off-camera first.
+Run **everything** here off-camera first.
 
 ```bash
 sudo -i                                  # become root for the whole demo
@@ -21,7 +27,7 @@ cp bash_aliases /root/.bash_aliases
 grep -q 'WGU D796 — RQN1 Task 1, Part C' /root/.bashrc \
     || cat bashrc_additions.sh >> /root/.bashrc
 
-# 3) Demo target directories for the navigation aliases
+# 3) Demo target directories for the navigation aliases (must exist)
 mkdir -p /root/Desktop /root/Downloads /root/Documents
 
 # 4) Pre-create /root/bin and put both scripts in it
@@ -44,7 +50,7 @@ Stay in the root shell — the prompt change should happen LIVE on camera.
 ## 🔴 RECORDING STARTS HERE
 
 ### 🎙️ SAY
-> "Hello, my name is Tonio Jenkins. This is Part C of the WGU D796 task. In this part I will demonstrate the shell configuration: a custom prompt, a separate aliases file, and a bin directory added to the PATH so my scripts run from any directory."
+> "Hello, my name is Tonio Jenkins. This is Part C of the WGU D796 task. In this part I will demonstrate the shell configuration: a custom prompt, six aliases stored in a separate aliases file, and a bin directory added to the PATH so my scripts run from any directory."
 
 ### 🎙️ SAY
 > "First, let me show you the aliases file."
@@ -55,7 +61,7 @@ cat ~/.bash_aliases
 ```
 
 ### 🎙️ SAY
-> "This is the separate aliases file. The first three aliases are shortcuts for common commands: `ll` runs `ls -lrt`, `la` runs `ls -a`, and `c` runs `clear`. The next three are navigation aliases: `desktop` jumps to the Desktop folder, `download` to Downloads, and `documents` to Documents."
+> "This is the separate aliases file. There are six aliases in total. Three are shortcuts for common commands: `ll` runs `ls -lrt`, `la` runs `ls -a`, and `c` runs `clear`. The other three are navigation aliases that take me to a directory in the root home: `desktop` jumps to `/root/Desktop`, `download` to `/root/Downloads`, and `documents` to `/root/Documents`."
 
 ### 🎙️ SAY
 > "Now let me show you the additions to the bashrc file."
@@ -83,59 +89,112 @@ source ~/.bashrc
 > "The prompt has just changed to a green dollar sign, and the text I am about to type will appear in cyan — two distinct colors."
 
 ### 🎙️ SAY
-> "Now I will demonstrate the aliases."
+> "Now I will demonstrate every single alias one at a time, with a banner before each one so it is clearly visible. I will start with the three command aliases, then the three navigation aliases, and end with the clear alias."
+
+---
+
+#### 🎙️ SAY (alias 1 of 6)
+> "First, the `ll` alias — it runs `ls -lrt`."
 
 ### ⌨️ TYPE
 ```bash
+echo "===== Alias 1 of 6 — ll (ls -lrt) ====="
 ll
 ```
 
 ### 🎙️ SAY
-> "The `ll` alias ran `ls -lrt` — a long listing sorted by modification time."
+> "The output is a long listing sorted by modification time. Alias one of six is verified."
+
+---
+
+#### 🎙️ SAY (alias 2 of 6)
+> "Next, the `la` alias — it runs `ls -a`."
 
 ### ⌨️ TYPE
 ```bash
+echo "===== Alias 2 of 6 — la (ls -a) ====="
 la
 ```
 
 ### 🎙️ SAY
-> "The `la` alias ran `ls -a` and showed the hidden files."
+> "The output shows all files including the hidden dotfiles. Alias two of six is verified."
+
+---
+
+#### 🎙️ SAY (alias 3 of 6)
+> "Next, the `desktop` navigation alias — it should take me to the Desktop folder."
 
 ### ⌨️ TYPE
 ```bash
-c
-```
-
-### 🎙️ SAY
-> "The `c` alias cleared the screen. Three command aliases verified."
-
-### ⌨️ TYPE
-```bash
+echo "===== Alias 3 of 6 — desktop (cd to ~/Desktop) ====="
 desktop
 pwd
 ```
 
 ### 🎙️ SAY
-> "The `desktop` alias took me straight to `/root/Desktop`, confirmed by `pwd`."
+> "`pwd` shows I am now in `/root/Desktop`. Alias three of six is verified."
+
+---
+
+#### 🎙️ SAY (alias 4 of 6)
+> "Next, the `download` navigation alias — it should take me to the Downloads folder."
 
 ### ⌨️ TYPE
 ```bash
+echo "===== Alias 4 of 6 — download (cd to ~/Downloads) ====="
 download
 pwd
 ```
 
 ### 🎙️ SAY
-> "The `download` alias took me to `/root/Downloads`."
+> "`pwd` shows I am now in `/root/Downloads`. Alias four of six is verified."
+
+---
+
+#### 🎙️ SAY (alias 5 of 6)
+> "Next, the `documents` navigation alias — it should take me to the Documents folder."
 
 ### ⌨️ TYPE
 ```bash
+echo "===== Alias 5 of 6 — documents (cd to ~/Documents) ====="
 documents
 pwd
 cd ~
 ```
 
 ### 🎙️ SAY
-> "And the `documents` alias took me to `/root/Documents`. All six aliases work."
+> "`pwd` shows I am now in `/root/Documents`. Alias five of six is verified. I returned to home for the next demo."
+
+---
+
+#### 🎙️ SAY (alias 6 of 6)
+> "Finally, the `c` alias — it runs `clear`. I will pause for two seconds before running it so the previous output is on screen, then `c` will clear it."
+
+### ⌨️ TYPE
+```bash
+echo "===== Alias 6 of 6 — c (clear) — running in 2 seconds... ====="
+sleep 2
+c
+```
+
+### 🎙️ SAY
+> "The screen has been cleared. Alias six of six is verified."
+
+---
+
+### 🎙️ SAY
+> "For belt-and-suspenders proof, I will list every alias defined in this session."
+
+### ⌨️ TYPE
+```bash
+echo "===== Final summary — every alias in this session ====="
+alias ll la c desktop download documents
+```
+
+### 🎙️ SAY
+> "All six aliases are listed with their definitions: `ll` equals `ls -lrt`, `la` equals `ls -a`, `c` equals `clear`, and the three navigation aliases each `cd` to their respective directory under root's home."
+
+---
 
 ### 🎙️ SAY
 > "Now I will show the bin directory and the PATH update."
@@ -195,8 +254,8 @@ echo yes | delete_user.sh devuser
 | Rubric | Where |
 |---|---|
 | C1 — `$` prompt with two colors | After `source ~/.bashrc` |
-| C2 — aliases file | `cat ~/.bash_aliases` and each alias demo |
-| C3 — applied from command line and verified | `source` + alias demo |
+| C2 — aliases file | `cat ~/.bash_aliases` plus the six per-alias demo blocks |
+| C3 — applied from command line, all six aliases verified | `source` + six labeled per-alias runs + final `alias` summary |
 | C4a — bin directory with both scripts | `ls -l /root/bin` |
 | C4b — PATH includes bin | `which` outputs |
 | C4c — execution from a non-bin directory | The `/tmp` runs at the end |
